@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>درخواست یدک‌کش / مکانیک سیار</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { font-family: Tahoma; background:#f5f5f5; }
+form { background:#fff; padding:20px; max-width:400px; margin:30px auto; border-radius:8px; }
+input, select, textarea, button {
+  width:100%; padding:10px; margin-top:10px;
+}
+button { background:#28a745; color:#fff; border:none; }
+</style>
+</head>
+<body>
+
+<form method="POST" action="submit.php">
+  <h3>درخواست خدمات</h3>
+
+  <select name="service_type" required>
+    <option value="">نوع خدمات</option>
+    <option value="یدک‌کش">یدک‌کش</option>
+    <option value="مکانیک سیار">مکانیک سیار</option>
+  </select>
+
+  <input type="text" name="name" placeholder="نام و نام خانوادگی" required>
+  <input type="tel" name="phone" placeholder="شماره تماس" required>
+  <input type="text" name="plate" placeholder="شماره پلاک" required>
+
+  <textarea name="description" placeholder="توضیح خرابی (اختیاری)"></textarea>
+
+  <input type="hidden" name="latitude" id="lat">
+  <input type="hidden" name="longitude" id="lon">
+
+  <button type="button" onclick="getLocation()">📍 ثبت موقعیت</button>
+  <button type="submit">ارسال درخواست</button>
+</form>
+
+<script>
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        document.getElementById("lat").value = position.coords.latitude;
+        document.getElementById("lon").value = position.coords.longitude;
+        alert("موقعیت ثبت شد ✅");
+      },
+      function() {
+        alert("دسترسی به موقعیت داده نشد ❌");
+      }
+    );
+  } else {
+    alert("GPS پشتیبانی نمی‌شود");
+  }
+}
+</script>
+
+</body>
+</html>
