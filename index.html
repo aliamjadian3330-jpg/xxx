@@ -85,6 +85,7 @@ button{
 
     <button class="btn-map" onclick="openMap()">📍 انتخاب موقعیت</button>
     <div id="map"></div>
+<button class="btn-map" onclick="getMyLocation()">📡 موقعیت من (GPS)</button>
 
     <button class="btn-send" onclick="sendWhatsApp()">📲 ارسال در واتساپ</button>
 
@@ -94,71 +95,112 @@ button{
 </div>
 
 <script>
-let map, marker, leafletReady=false;
+let map, marker, leafletReady = false;
+
+// گرفتن المنت‌ها (خیلی مهم)
+const serviceEl = document.getElementById("service");
+const nameEl = document.getElementById("name");
+const phoneEl = document.getElementById("phone");
+const plateEl = document.getElementById("plate");
+const descEl = document.getElementById("desc");
+const latEl = document.getElementById("lat");
+const lngEl = document.getElementById("lng");
 
 function loadLeaflet(cb){
   if(leafletReady){ cb(); return; }
 
-  const css=document.createElement("link");
-  css.rel="stylesheet";
-  css.href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css";
+  const css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css";
 
-  const js=document.createElement("script");
-  js.src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
-  js.onload=()=>{leafletReady=true;cb();};
+  const js = document.createElement("script");
+  js.src = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
+  js.onload = () => { leafletReady = true; cb(); };
 
   document.head.appendChild(css);
   document.body.appendChild(js);
 }
 
 function openMap(){
-  document.getElementById("map").style.display="block";
+  document.getElementById("map").style.display = "block";
 
   loadLeaflet(()=>{
     if(!map){
-      map=L.map("map").setView([35.7,51.4],13);
+      map = L.map("map").setView([35.7,51.4], 13);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-      map.on("click",e=>{
-        const {lat,lng}=e.latlng;
-        if(marker) map.removeLayer(marker);
-        marker=L.marker([lat,lng]).addTo(map);
-        latEl.value=lat;
-        lngEl.value=lng;
+
+      map.on("click", e => {
+        setMarker(e.latlng.lat, e.latlng.lng);
       });
     }
   });
 }
 
+// 📡 گرفتن موقعیت با GPS
+function getMyLocation(){
+  if(!navigator.geolocation){
+    alert("GPS پشتیبانی نمی‌شود");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+
+    openMap();
+    setTimeout(()=>{
+      map.setView([lat, lng], 16);
+      setMarker(lat, lng);
+    }, 500);
+  }, ()=>{
+    alert("دسترسی به موقعیت داده نشد");
+  });
+}
+
+function setMarker(lat, lng){
+  if(marker) map.removeLayer(marker);
+  marker = L.marker([lat, lng]).addTo(map);
+  latEl.value = lat;
+  lngEl.value = lng;
+}
+
 function sendWhatsApp(){
-  if(!serviceEl.value||!nameEl.value||!phoneEl.value||!plateEl.value){
+  if(
+    !serviceEl.value ||
+    !nameEl.value ||
+    !phoneEl.value ||
+    !plateEl.value
+  ){
     alert("لطفاً همه فیلدها را پر کنید");
     return;
   }
-  if(!latEl.value){
-    alert("لطفاً موقعیت را انتخاب کنید");
+
+  if(!latEl.value || !lngEl.value){
+    alert("لطفاً موقعیت خود را مشخص کنید");
     return;
   }
 
-  const link=`https://maps.google.com/?q=${latEl.value},${lngEl.value}`;
-  const msg=`🚨 درخواست خدمات خودرو
-🔧 ${serviceEl.value}
-👤 ${nameEl.value}
-📞 ${phoneEl.value}
-🚘 ${plateEl.value}
-📝 ${descEl.value||"-"}
-📍 ${link}`;
+  const mapLink = `https://maps.google.com/?q=${latEl.value},${lngEl.value}`;
 
-  const wa="989XXXXXXXXX"; // شماره واتساپ
-  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`);
+  const msg = `
+🚨 درخواست خدمات خودرو
+
+🔧 سرویس: ${serviceEl.value}
+👤 نام: ${nameEl.value}
+📞 تماس: ${phoneEl.value}
+🚘 پلاک: ${plateEl.value}
+📝 توضیحات: ${descEl.value || "-"}
+
+📍 موقعیت:
+${mapLink}
+  `;
+
+  const whatsappNumber = "989XXXXXXXXX"; // شماره واتساپ خودت
+  window.open(
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
 }
-
-const serviceEl=service;
-const nameEl=name;
-const phoneEl=phone;
-const plateEl=plate;
-const descEl=desc;
-const latEl=lat;
-const lngEl=lng;
 </script>
 
 </body>
