@@ -2,155 +2,184 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>درخواست یدک‌کش / مکانیک سیار</title>
+<title>درخواست یدک‌کش | مکانیک سیار</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
-body { font-family:tahoma; background:#f2f2f2; margin:0; direction: rtl; }
-form { max-width:420px; margin:30px auto; background:#fff; padding:20px; border-radius:10px; }
-input, select, textarea, button { width:100%; margin-top:10px; padding:10px; }
-button { background:#28a745; color:#fff; border:none; cursor:pointer; }
-
-#mapContainer {
-  display:none;
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:#fff;
-  z-index:1000;
-}
-
-#map { width:100%; height:80%; }
-
-.map-buttons {
+body{
+  font-family: Tahoma, sans-serif;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  margin:0;
+  min-height:100vh;
   display:flex;
-  justify-content:space-around;
-  margin:10px;
+  align-items:center;
+  justify-content:center;
 }
 
-.map-buttons button {
-  flex:1;
-  margin:0 5px;
-  padding:10px;
+.card{
+  width:100%;
+  max-width:430px;
+  background:#fff;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+input,select,textarea,button{
+  width:100%;
+  margin-top:12px;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:1em;
+}
+
+textarea{min-height:80px}
+
+button{
   border:none;
-  border-radius:5px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-map{
+  background:#007bff;
   color:#fff;
 }
 
-.manual { background:#007bff; }
-.current { background:#ffc107; color:#000; }
-.close { background:#dc3545; }
+.btn-send{
+  background:#25D366;
+  color:#fff;
+  margin-top:15px;
+  font-size:1.05em;
+}
+
+#map{
+  display:none;
+  height:260px;
+  margin-top:12px;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.note{
+  font-size:.85em;
+  color:#555;
+  margin-top:8px;
+  text-align:center;
+}
 </style>
 </head>
 
 <body>
 
-<form id="form">
-  <h3>درخواست خدمات</h3>
+<div class="card">
+  <h2>🚘 درخواست خدمات</h2>
 
-  <select name="service" required>
+  <select id="service" required>
     <option value="">نوع خدمات</option>
     <option value="یدک‌کش">یدک‌کش</option>
     <option value="مکانیک سیار">مکانیک سیار</option>
   </select>
 
-  <input name="name" placeholder="نام" required>
-  <input name="phone" placeholder="شماره تماس" required>
-  <input name="plate" placeholder="شماره پلاک" required>
-  <textarea name="desc" placeholder="توضیح (اختیاری)"></textarea>
+  <input id="name" placeholder="نام و نام خانوادگی" required>
+  <input id="phone" placeholder="شماره تماس" required>
+  <input id="plate" placeholder="شماره پلاک خودرو" required>
+  <textarea id="desc" placeholder="توضیحات (اختیاری)"></textarea>
 
   <input type="hidden" id="lat">
-  <input type="hidden" id="lon">
+  <input type="hidden" id="lng">
 
-  <button type="button" onclick="openMap()">📍 انتخاب موقعیت</button>
-  <button type="submit">ارسال درخواست</button>
-</form>
-
-<!-- نقشه -->
-<div id="mapContainer">
-  <div class="map-buttons">
-    <button class="manual" onclick="manualSelect()">🖱️ انتخاب دستی</button>
-    <button class="current" onclick="useCurrentLocation()">📌 موقعیت فعلی</button>
-    <button class="close" onclick="closeMap()">✖ بستن</button>
-  </div>
+  <button class="btn-map" onclick="openMap()">📍 انتخاب موقعیت روی نقشه</button>
   <div id="map"></div>
+
+  <button class="btn-send" onclick="sendWhatsApp()">📲 ارسال درخواست در واتساپ</button>
+
+  <div class="note">
+    پس از باز شدن واتساپ فقط دکمه ارسال را بزنید
+  </div>
 </div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
 let map, marker;
-let manualMode = false;
 
-function openMap() {
-  document.getElementById('mapContainer').style.display = 'block';
+function openMap(){
+  document.getElementById("map").style.display="block";
 
-  if (!map) {
-    map = L.map('map').setView([35.6892, 51.3890], 12);
+  if(!map){
+    map = L.map('map').setView([35.7,51.4],13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:19
     }).addTo(map);
 
-    map.on('click', function(e) {
-      if (!manualMode) return;
+    map.on('click', e=>{
+      const {lat,lng} = e.latlng;
 
-      setMarker(e.latlng.lat, e.latlng.lng);
-      manualMode = false;
-      alert('موقعیت انتخاب شد');
-      closeMap();
+      if(marker) map.removeLayer(marker);
+      marker = L.marker([lat,lng]).addTo(map);
+
+      document.getElementById("lat").value = lat;
+      document.getElementById("lng").value = lng;
     });
   }
-
-  setTimeout(() => map.invalidateSize(), 200);
 }
 
-function closeMap() {
-  document.getElementById('mapContainer').style.display = 'none';
-}
+function sendWhatsApp(){
+  const service = serviceEl.value;
+  const name = nameEl.value;
+  const phone = phoneEl.value;
+  const plate = plateEl.value;
+  const desc = descEl.value;
+  const lat = latEl.value;
+  const lng = lngEl.value;
 
-function manualSelect() {
-  manualMode = true;
-  alert('روی نقشه کلیک کنید');
-}
-
-function setMarker(lat, lng) {
-  document.getElementById('lat').value = lat;
-  document.getElementById('lon').value = lng;
-
-  if (marker) map.removeLayer(marker);
-  marker = L.marker([lat, lng]).addTo(map);
-}
-
-function useCurrentLocation() {
-  if (!navigator.geolocation) {
-    alert('مرورگر شما پشتیبانی نمی‌کند');
+  if(!service || !name || !phone || !plate){
+    alert("لطفاً همه فیلدهای ضروری را پر کنید");
     return;
   }
 
-  navigator.geolocation.getCurrentPosition(pos => {
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
+  if(!lat || !lng){
+    alert("لطفاً موقعیت خود را روی نقشه مشخص کنید");
+    return;
+  }
 
-    map.setView([lat, lng], 16);
-    setMarker(lat, lng);
-    closeMap();
-  }, () => {
-    alert('دریافت موقعیت ناموفق بود');
-  });
+  const mapLink = `https://maps.google.com/?q=${lat},${lng}`;
+
+  const text = `
+🚨 درخواست جدید خدمات خودرو
+
+🔧 سرویس: ${service}
+👤 نام: ${name}
+📞 تماس: ${phone}
+🚘 پلاک: ${plate}
+📝 توضیحات: ${desc || "—"}
+
+📍 موقعیت:
+${mapLink}
+`;
+
+  const whatsappNumber = "989944546917"; // ← شماره خودت
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+  window.open(url,"_blank");
 }
 
-// اعتبارسنجی فرم
-document.getElementById('form').addEventListener('submit', function(e) {
-  if (!lat.value || !lon.value) {
-    e.preventDefault();
-    alert('لطفاً موقعیت را انتخاب کنید');
-  }
-});
+const serviceEl = document.getElementById("service");
+const nameEl = document.getElementById("name");
+const phoneEl = document.getElementById("phone");
+const plateEl = document.getElementById("plate");
+const descEl = document.getElementById("desc");
+const latEl = document.getElementById("lat");
+const lngEl = document.getElementById("lng");
 </script>
 
 </body>
