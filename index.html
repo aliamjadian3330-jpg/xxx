@@ -5,181 +5,160 @@
 <title>درخواست یدک‌کش | مکانیک سیار</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
 <style>
+*{box-sizing:border-box}
 body{
-  font-family: Tahoma, sans-serif;
-  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  font-family:tahoma;
   margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:#f4f6f8;
 }
-
+.wrapper{
+  max-width:420px;
+  margin:25px auto;
+  padding:15px;
+}
 .card{
-  width:100%;
-  max-width:430px;
   background:#fff;
-  border-radius:18px;
-  padding:25px;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
-
-h2{
-  text-align:center;
-  margin-bottom:20px;
-}
-
+h2{text-align:center;margin:0 0 15px}
 input,select,textarea,button{
   width:100%;
-  margin-top:12px;
-  padding:13px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  font-size:1em;
+  margin-top:10px;
+  padding:11px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:15px;
 }
-
-textarea{min-height:80px}
-
+textarea{min-height:70px}
 button{
   border:none;
   font-weight:bold;
-  cursor:pointer;
 }
-
 .btn-map{
-  background:#007bff;
+  background:#0069d9;
   color:#fff;
 }
-
 .btn-send{
   background:#25D366;
   color:#fff;
-  margin-top:15px;
-  font-size:1.05em;
+  margin-top:14px;
 }
-
 #map{
   display:none;
-  height:260px;
-  margin-top:12px;
-  border-radius:12px;
+  height:220px;
+  margin-top:10px;
+  border-radius:10px;
   overflow:hidden;
 }
-
-.note{
-  font-size:.85em;
-  color:#555;
-  margin-top:8px;
+.small{
+  font-size:13px;
   text-align:center;
+  color:#666;
+  margin-top:8px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h2>🚘 درخواست خدمات</h2>
+<div class="wrapper">
+  <div class="card">
 
-  <select id="service" required>
-    <option value="">نوع خدمات</option>
-    <option value="یدک‌کش">یدک‌کش</option>
-    <option value="مکانیک سیار">مکانیک سیار</option>
-  </select>
+    <h2>🚘 درخواست خدمات</h2>
 
-  <input id="name" placeholder="نام و نام خانوادگی" required>
-  <input id="phone" placeholder="شماره تماس" required>
-  <input id="plate" placeholder="شماره پلاک خودرو" required>
-  <textarea id="desc" placeholder="توضیحات (اختیاری)"></textarea>
+    <select id="service">
+      <option value="">نوع خدمات</option>
+      <option value="یدک‌کش">یدک‌کش</option>
+      <option value="مکانیک سیار">مکانیک سیار</option>
+    </select>
 
-  <input type="hidden" id="lat">
-  <input type="hidden" id="lng">
+    <input id="name" placeholder="نام">
+    <input id="phone" placeholder="شماره تماس">
+    <input id="plate" placeholder="شماره پلاک">
+    <textarea id="desc" placeholder="توضیحات (اختیاری)"></textarea>
 
-  <button class="btn-map" onclick="openMap()">📍 انتخاب موقعیت روی نقشه</button>
-  <div id="map"></div>
+    <input type="hidden" id="lat">
+    <input type="hidden" id="lng">
 
-  <button class="btn-send" onclick="sendWhatsApp()">📲 ارسال درخواست در واتساپ</button>
+    <button class="btn-map" onclick="openMap()">📍 انتخاب موقعیت</button>
+    <div id="map"></div>
 
-  <div class="note">
-    پس از باز شدن واتساپ فقط دکمه ارسال را بزنید
+    <button class="btn-send" onclick="sendWhatsApp()">📲 ارسال در واتساپ</button>
+
+    <div class="small">پس از باز شدن واتساپ، ارسال را بزنید</div>
+
   </div>
 </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-let map, marker;
+let map, marker, leafletReady=false;
+
+function loadLeaflet(cb){
+  if(leafletReady){ cb(); return; }
+
+  const css=document.createElement("link");
+  css.rel="stylesheet";
+  css.href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css";
+
+  const js=document.createElement("script");
+  js.src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
+  js.onload=()=>{leafletReady=true;cb();};
+
+  document.head.appendChild(css);
+  document.body.appendChild(js);
+}
 
 function openMap(){
   document.getElementById("map").style.display="block";
 
-  if(!map){
-    map = L.map('map').setView([35.7,51.4],13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-      maxZoom:19
-    }).addTo(map);
-
-    map.on('click', e=>{
-      const {lat,lng} = e.latlng;
-
-      if(marker) map.removeLayer(marker);
-      marker = L.marker([lat,lng]).addTo(map);
-
-      document.getElementById("lat").value = lat;
-      document.getElementById("lng").value = lng;
-    });
-  }
+  loadLeaflet(()=>{
+    if(!map){
+      map=L.map("map").setView([35.7,51.4],13);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+      map.on("click",e=>{
+        const {lat,lng}=e.latlng;
+        if(marker) map.removeLayer(marker);
+        marker=L.marker([lat,lng]).addTo(map);
+        latEl.value=lat;
+        lngEl.value=lng;
+      });
+    }
+  });
 }
 
 function sendWhatsApp(){
-  const service = serviceEl.value;
-  const name = nameEl.value;
-  const phone = phoneEl.value;
-  const plate = plateEl.value;
-  const desc = descEl.value;
-  const lat = latEl.value;
-  const lng = lngEl.value;
-
-  if(!service || !name || !phone || !plate){
-    alert("لطفاً همه فیلدهای ضروری را پر کنید");
+  if(!serviceEl.value||!nameEl.value||!phoneEl.value||!plateEl.value){
+    alert("لطفاً همه فیلدها را پر کنید");
+    return;
+  }
+  if(!latEl.value){
+    alert("لطفاً موقعیت را انتخاب کنید");
     return;
   }
 
-  if(!lat || !lng){
-    alert("لطفاً موقعیت خود را روی نقشه مشخص کنید");
-    return;
-  }
+  const link=`https://maps.google.com/?q=${latEl.value},${lngEl.value}`;
+  const msg=`🚨 درخواست خدمات خودرو
+🔧 ${serviceEl.value}
+👤 ${nameEl.value}
+📞 ${phoneEl.value}
+🚘 ${plateEl.value}
+📝 ${descEl.value||"-"}
+📍 ${link}`;
 
-  const mapLink = `https://maps.google.com/?q=${lat},${lng}`;
-
-  const text = `
-🚨 درخواست جدید خدمات خودرو
-
-🔧 سرویس: ${service}
-👤 نام: ${name}
-📞 تماس: ${phone}
-🚘 پلاک: ${plate}
-📝 توضیحات: ${desc || "—"}
-
-📍 موقعیت:
-${mapLink}
-`;
-
-  const whatsappNumber = "989944546917"; // ← شماره خودت
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-
-  window.open(url,"_blank");
+  const wa="989XXXXXXXXX"; // شماره واتساپ
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`);
 }
 
-const serviceEl = document.getElementById("service");
-const nameEl = document.getElementById("name");
-const phoneEl = document.getElementById("phone");
-const plateEl = document.getElementById("plate");
-const descEl = document.getElementById("desc");
-const latEl = document.getElementById("lat");
-const lngEl = document.getElementById("lng");
+const serviceEl=service;
+const nameEl=name;
+const phoneEl=phone;
+const plateEl=plate;
+const descEl=desc;
+const latEl=lat;
+const lngEl=lng;
 </script>
 
 </body>
