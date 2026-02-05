@@ -1,4 +1,24 @@
+/* اعمال فونت ایرانسل توپر روی کل سایت */
+body, html {
+  font-family: 'IranSans', sans-serif;
+  font-weight: 700; /* توپر */
+  line-height: 1.6;
+  color: #1f2937;
+  margin: 0;
+  padding: 0;
+}
 
+/* همه عناصر فونت را از body ارث ببرند */
+* {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+/* هدرها و لینک‌ها */
+h1, h2, h3, h4, h5, h6, a, button {
+  font-weight: 700;
+  font-family: inherit;
+}
 
 /* ================== Variables ================== */
     :root {
@@ -17,6 +37,7 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Vazirmatn', sans-serif;
+      
     }
 
     body {
@@ -151,7 +172,7 @@
   flex-wrap: wrap;
   margin: 0.5rem auto;
   max-width: 1300px;
-  width: calc(100% - 2rem);
+  /* width: calc(100% - 2rem); */
 }
 
 .top-panel-tabs::before {
@@ -706,207 +727,83 @@
   100% { transform: translateX(-66.66%); }
 }
 /* بخش کلی کارت‌ها */
-/* === بخش کلی کارت‌ها === */
-.services {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2.5rem;
-  padding: 5rem 2rem;
-  background: linear-gradient(135deg, #f0fdfa, #e0f2fe);
-  min-height: 100vh;
-}
-
-/* === کارت‌ها === */
-.service {
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  position: relative;
-  overflow: hidden;
-  padding: 2.5rem 1.5rem 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  transition: all 0.6s ease;
-  cursor: pointer;
-}
-
-/* === انیمیشن نور متحرک زیبا === */
-.service::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    #22c55e,
-    #06b6d4,
-    #f59e0b,
-    #ef4444,
-    #22c55e
-  );
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  animation: rotateLight 6s linear infinite;
-  z-index: 0;
-}
-
-@keyframes rotateLight {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.service:hover::before {
-  opacity: 0.15;
-}
-
-/* === افکت هاور سه‌بعدی === */
-.service:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-}
-
-/* === آیکن بالا === */
-.icon-box {
-  position: absolute;
-  top: -50px;
+/* === نوار پایین ثابت === */
+.bottom-bar {
+  position: fixed;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  background: white;
-  width: 100px;
-  height: 100px;
-  border-radius: 20px;
+  background: #fff;
+  border: 2px solid #22c55e;
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
   display: flex;
-  align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  z-index: 2;
-  transition: all 0.6s ease;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 9999;
+  max-width: 90%;
 }
 
-.service:hover .icon-box {
-  transform: translateX(-50%) translateY(-5px) scale(1.15) rotate(6deg);
+/* === هر سرویس داخل نوار === */
+.bottom-bar .service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
 }
 
-/* === آیکن داخل با انیمیشن === */
-.icon-box img {
-  width: 60px;
-  height: 60px;
-  transition: transform 0.5s ease;
+.bottom-bar .service:hover {
+  transform: translateY(-3px);
 }
 
-.service:hover .icon-box img {
-  transform: rotate(10deg) scale(1.2);
+/* === آیکن === */
+.bottom-bar .service img {
+  width:80px;
+  height:80px;
 }
 
-/* === عنوان === */
-.service h3 {
-  color: #065f46;
-  font-size: 1.4rem;
-  font-weight: 800;
-  margin-top: 4rem;
-  margin-bottom: 0.8rem;
-  z-index: 1;
-  position: relative;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: color 0.3s ease;
-}
-
-.service:hover h3 {
-  color: #10b981;
-}
-
-/* === توضیحات === */
-.service p {
-  color: #334155;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  padding: 0 1rem;
-  z-index: 1;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.service:hover p {
+/* === متن زیر آیکن === */
+.bottom-bar .service p {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  text-align: center;
   color: #065f46;
 }
 
-/* === افکت نور داخلی === */
-.service::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top left, rgba(255,255,255,0.3), transparent 70%);
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  z-index: 1;
-}
-
-.service:hover::after {
-  opacity: 1;
-}
-
-/* === ریسپانسیو === */
-@media (max-width: 1024px) {
-  .service {
-    width: 260px;
-    height: 260px;
-  }
-}
-
+/* === ریسپانسیو موبایل === */
 @media (max-width: 768px) {
-  .services {
-    gap: 2rem;
-    padding: 3rem 1rem;
+  .bottom-bar {
+    gap: 15px;
+    padding: 0.4rem 0.8rem;
   }
 
-  .service {
-    width: 220px;
-    height: 220px;
+  .bottom-bar .service img {
+    width: 50px;
+    height: 50px;
   }
 
-  .icon-box {
-    width: 80px;
-    height: 80px;
-    top: -40px;
-  }
-
-  .icon-box img {
-    width: 45px;
-    height: 45px;
-  }
-
-  .service h3 {
-    font-size: 1.1rem;
-  }
-
-  .service p {
-    font-size: 0.8rem;
+  .bottom-bar .service p {
+    font-size: 0.7rem;
   }
 }
 
 @media (max-width: 480px) {
-  .service {
-    width: 180px;
-    height: 200px;
-    padding: 2rem 1rem 1rem;
+  .bottom-bar {
+    gap: 12px;
+    padding: 0.3rem 0.6rem;
   }
 
-  .service h3 {
+  .bottom-bar .service img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .bottom-bar .service p {
     font-size: 1rem;
-  }
-
-  .service p {
-    font-size: 0.75rem;
   }
 }
 
@@ -1568,8 +1465,8 @@ body, html {height:100%; width:100%;}
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 120%;
-  height: 120%;
+  width: 50%;
+  height: 50%;
   background: rgb(0, 255, 94);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(1);
@@ -1977,63 +1874,94 @@ body, html {height:100%; width:100%;}
   .footer-links a { font-size: 0.95rem; }
   .social-icons a { font-size: 1.8rem; }
 }
-.emergency-call {
+
+  .emergency-call {
   position: fixed;
-  bottom: 19px;
-  left: 5px;
-  z-index: 9999;
-  background-color: #16a34a; /* سبز */
-  color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
+  bottom: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: transparent; /* شفاف */
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(3, 235, 88, 0.6);
-  text-decoration: none;
-  animation: pulse 1.5s infinite, floatUpDown 2.5s ease-in-out infinite;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 9999;
+  overflow: visible;
 }
 
 .emergency-call img {
-  width: 20px;
-  height: 20px;
-  filter: brightness(0) invert(1); /* سفید */
+  width: 32px;
+  height: 32px;
+  z-index: 3;
+  position: relative;
 }
 
+/* حلقه‌های پالس */
+.emergency-call .pulse {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid rgba(34, 197, 94, 0.5); /* فقط حاشیه سبز */
+  background-color: transparent; /* داخل شفاف */
+  z-index: 1;
+  animation: pulseWave 1.5s infinite;
+}
+
+.emergency-call .pulse1 {
+  animation-delay: 0s;
+}
+
+.emergency-call .pulse2 {
+  animation-delay: 0.6s;
+  border-color: rgba(34, 197, 94, 0.932);
+  width: 70px;
+  height: 70px;
+}
+
+/* انیمیشن موجی */
+@keyframes pulseWave {
+  0% {
+    transform: scale(0.8);
+    opacity:1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2);
+    opacity:0.5;
+  }
+}
+
+/* هاور */
 .emergency-call:hover {
-  transform: scale(1.15);
-  box-shadow: 0 12px 35px rgba(22,163,74,0.8);
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(7, 233, 90, 0.945); }
-  70% { box-shadow: 0 0 0 20px rgba(22,163,74,0); }
-  100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
-}
-
-@keyframes floatUpDown {
-  0% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-6px) scale(1.02); }
-  100% { transform: translateY(0) scale(1); }
-}
-
-/* ریسپانسیو روی موبایل */
+/* ریسپانسیو موبایل */
 @media (max-width: 480px) {
   .emergency-call {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    width: 50px;
+    height: 50px;
   }
+
   .emergency-call img {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .emergency-call .pulse1 {
+    width: 50px;
+    height: 50px;
+  }
+
+  .emergency-call .pulse2 {
+    width: 60px;
+    height: 60px;
   }
 }
-
-  
-
-
-
