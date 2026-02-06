@@ -231,3 +231,39 @@ document.addEventListener("DOMContentLoaded", () => {
     widget.classList.add("minimized");
   });
 });
+
+
+// بازخورد نظرسنجی
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // جلوگیری از ارسال پیش‌فرض فرم
+
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      message: form.message.value
+    };
+
+    // URL Web App شما
+    const url = "https://script.google.com/macros/s/AKfycbyovm2bmqKkjS7kfyB4VlWAqVmbecuKKuQDBkVMpoy3uayZOyXh6hZfLTDXTo11UR28Bg/exec";
+
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => response.json())
+    .then(result => {
+      if(result.status === "success") {
+        alert("بازخورد شما با موفقیت ثبت شد!");
+        form.reset();
+      } else {
+        alert("خطا در ثبت بازخورد: " + result.message);
+      }
+    })
+    .catch(error => {
+      alert("مشکل در ارسال بازخورد: " + error);
+    });
+  });
