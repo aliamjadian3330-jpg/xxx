@@ -283,35 +283,53 @@
 <!-- ================== نظر سنجی ================== -->
 <section class="feedback-section">
   <div class="feedback-container">
-
     <h2>نظر خود را با ما در میان بگذارید</h2>
     <p>ما دوست داریم تجربه شما را بهتر کنیم. لطفاً بازخورد خود را ثبت کنید.</p>
 
-    <form
-      class="feedback-form"
-      action="https://script.google.com/macros/s/AKfycbwMesfSl3JN9VRozXgGf2pN7nwfhjIX7zKnlh_8iyTOVCJzN11jBpWiPaWEzm3GB1cwUw/exec"
-      method="POST"
-      accept-charset="UTF-8"
-    >
-
-      <div class="input-group">
-        <input type="text" name="name" placeholder="نام و نام خانوادگی" required>
-      </div>
-
-      <div class="input-group">
-        <input type="email" name="email" placeholder="ایمیل" required>
-      </div>
-
-      <div class="input-group">
-        <textarea name="message" rows="6" placeholder="نظر شما" required></textarea>
-      </div>
-
+    <form id="feedback-form">
+      <input type="text" name="name" placeholder="نام و نام خانوادگی" required>
+      <input type="email" name="email" placeholder="ایمیل" required>
+      <textarea name="message" rows="6" placeholder="نظر شما" required></textarea>
       <button type="submit">ارسال بازخورد</button>
-
     </form>
 
+    <div id="form-message" style="margin-top:15px;color:green;"></div>
   </div>
 </section>
+
+<script>
+const form = document.getElementById("feedback-form");
+const messageDiv = document.getElementById("form-message");
+
+// لینک Web App جدید
+const scriptURL = "https://script.google.com/macros/s/AKfycby8xyP0d98cOy9SSaYp0xFchrJimCJbiEytosTrXnurI8y728NKihPFTKNbN42pq7CR2w/exec";
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  messageDiv.style.color = "black";
+  messageDiv.textContent = "در حال ارسال ...";
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: new FormData(form)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === "SUCCESS") {
+      messageDiv.style.color = "green";
+      messageDiv.textContent = "پیام شما با موفقیت ارسال شد ✅";
+      form.reset();
+    } else {
+      messageDiv.style.color = "red";
+      messageDiv.textContent = "خطا در ارسال پیام ❌: " + data.message;
+    }
+  })
+  .catch(err => {
+    messageDiv.style.color = "red";
+    messageDiv.textContent = "خطا در ارسال پیام ❌: " + err;
+  });
+});
+</script>
 
 
  <!-- پشتیبانی -->
