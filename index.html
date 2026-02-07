@@ -396,28 +396,95 @@ form.addEventListener("submit", e => {
 
 
  <!-- پشتیبانی -->
-  <div class="support-widget" id="supportWidget">
+<div class="support-widget" id="supportWidget">
   <div class="support-toggle" id="supportToggle">
     <img src="./icons8-online-support-94.png" alt="پشتیبانی" style="width:2.5rem;">
-  
   </div>
 
   <div class="support-panel" id="supportPanel">
     <div class="support-header">
       <span>پشتیبانی آنلاین</span>
-      <i class="fas fa-times close-btn" id="closeBtn"></i>
+      <i class="fas fa-times close-btn" id="closeBtn" style="cursor:pointer;">×</i>
     </div>
+
     <div class="support-body">
       <p>سوالی داری؟ همین حالا پیام بده!</p>
-      <form class="support-form" action="https://formspree.io/f/yourFormID" method="POST">
-        <input type="text" name="name" placeholder="نام شما" required>
-        <input type="email" name="email" placeholder="ایمیل شما" required>
-        <textarea name="message" rows="4" placeholder="پیام شما..." required></textarea>
+
+      <!-- فرم کاربر -->
+      <form class="support-form" id="supportForm">
+        <input type="text" name="name" id="userName" placeholder="نام شما" required>
+        <input type="email" name="email" id="userEmail" placeholder="ایمیل شما" required>
+        <textarea name="message" id="userMessage" rows="4" placeholder="پیام شما..." required></textarea>
         <button type="submit">ارسال پیام</button>
       </form>
     </div>
   </div>
 </div>
+
+<!-- مخفی کردن Tawk.to تا فرم پر شود -->
+<div id="tawkContainer" style="display:none;">
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const supportPanel = document.getElementById("supportPanel");
+  const supportToggle = document.getElementById("supportToggle");
+  const closeBtn = document.getElementById("closeBtn");
+  const form = document.getElementById("supportForm");
+  const tawkContainer = document.getElementById("tawkContainer");
+
+  // باز و بسته کردن پنل
+  supportToggle.addEventListener("click", () => {
+    supportPanel.style.display = "block";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    supportPanel.style.display = "none";
+  });
+
+  // وقتی فرم ارسال شد
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("userName").value.trim();
+    const email = document.getElementById("userEmail").value.trim();
+    const message = document.getElementById("userMessage").value.trim();
+
+    if(!name || !email || !message) { alert("لطفاً همه فیلدها را پر کنید!"); return; }
+
+    // ارسال اطلاعات به Formspree (در صورت نیاز)
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if(response.ok){
+        alert("پیام شما ارسال شد! اکنون می‌توانید با پشتیبانی چت کنید.");
+
+        // مخفی کردن فرم و نمایش Tawk.to
+        form.style.display = "none";
+        tawkContainer.style.display = "block";
+
+        // ارسال اطلاعات اولیه به Tawk.to
+        Tawk_API.visitor = { name: name, email: email };
+      } else {
+        alert("ارسال موفق نبود. دوباره تلاش کنید.");
+      }
+    }).catch(err => alert("خطا در ارسال پیام: " + err));
+  });
+});
+</script>
 
 <!-- ================== Footer Modern & Professional ================== -->
 <footer id="site-footer" class="footer">
