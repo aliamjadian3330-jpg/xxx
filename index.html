@@ -280,7 +280,6 @@
     </div>
   </div>
 </section>
-<!-- ================== نظر سنجی ================== -->
 <section class="feedback-section">
   <div class="feedback-container">
     <h2>نظر خود را با ما در میان بگذارید</h2>
@@ -301,8 +300,8 @@
 const form = document.getElementById("feedback-form");
 const messageDiv = document.getElementById("form-message");
 
-// لینک Web App جدید
-const scriptURL = "https://script.google.com/macros/s/AKfycby8xyP0d98cOy9SSaYp0xFchrJimCJbiEytosTrXnurI8y728NKihPFTKNbN42pq7CR2w/exec";
+// لینک Web App نسخه ۴
+const scriptURL = "https://script.google.com/macros/s/AKfycbwNGq092JGbDadGzl2CCFNqzdOqhwKy5WLMBPGQrb5PkL2_8xBMZ6Td9x69qHBrrCU2aQ/exec";
 
 form.addEventListener("submit", e => {
   e.preventDefault();
@@ -311,7 +310,8 @@ form.addEventListener("submit", e => {
 
   fetch(scriptURL, {
     method: "POST",
-    body: new FormData(form)
+    body: new FormData(form),
+    mode: "cors"
   })
   .then(response => response.json())
   .then(data => {
