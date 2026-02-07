@@ -399,7 +399,7 @@ form.addEventListener("submit", e => {
 <!-- آیکون پشتیبانی -->
 <div class="support-widget" id="supportWidget">
   <div class="support-toggle" id="supportToggle">
-    <img src="./icons8-online-support-94.png" alt="پشتیبانی" style="width:2.5rem; cursor:pointer;">
+    <img src="icons8-online-support-94.png" alt="پشتیبانی" style="width:2.5rem; cursor:pointer;">
   </div>
 </div>
 
@@ -407,31 +407,22 @@ form.addEventListener("submit", e => {
 document.addEventListener("DOMContentLoaded", function() {
   const supportToggle = document.getElementById("supportToggle");
 
-  // وقتی آیکون زده شد
+  // لود Tawk.to در background
+  if (!window.TawkLoaded) {
+    window.TawkLoaded = true;
+
+    var s1 = document.createElement("script");
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin','*');
+    document.body.appendChild(s1);
+  }
+
+  // وقتی کاربر روی آیکون کلیک کرد
   supportToggle.addEventListener("click", () => {
-    // اگر Tawk.to هنوز لود نشده
-    if (!window.TawkLoaded) {
-      window.TawkLoaded = true;
-
-      var s1 = document.createElement("script");
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin','*');
-      document.body.appendChild(s1);
-
-      s1.onload = function() {
-        // بعد از لود کامل، ویجت را باز کنیم
-        if (Tawk_API && Tawk_API.maximize) {
-          Tawk_API.maximize(); // باز کردن ویجت
-        }
-      }
-
-    } else {
-      // اگر قبلاً لود شده، ویجت را دوباره باز کن
-      if (Tawk_API && Tawk_API.maximize) {
-        Tawk_API.maximize();
-      }
+    if (window.Tawk_API && Tawk_API.maximize) {
+      Tawk_API.maximize(); // باز کردن ویجت
     }
   });
 });
