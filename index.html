@@ -401,14 +401,14 @@ form.addEventListener("submit", e => {
     <img src="./icons8-online-support-94.png" alt="پشتیبانی" style="width:2.5rem;">
   </div>
 
-  <div class="support-panel" id="supportPanel">
+  <div class="support-panel" id="supportPanel" style="display:none;">
     <div class="support-header">
       <span>پشتیبانی آنلاین</span>
       <i class="fas fa-times close-btn" id="closeBtn"></i>
     </div>
     <div class="support-body">
       <p>سوالی داری؟ همین حالا پیام بده!</p>
-      <form class="support-form" action="https://formspree.io/f/yourFormID" method="POST">
+      <form id="localSupportForm">
         <input type="text" name="name" placeholder="نام شما" required>
         <input type="email" name="email" placeholder="ایمیل شما" required>
         <textarea name="message" rows="4" placeholder="پیام شما..." required></textarea>
@@ -432,38 +432,23 @@ s0.parentNode.insertBefore(s1,s0);
 </script>
 
 <script>
-// باز شدن فرم و تعامل با Tawk.to بعد از submit
 document.addEventListener("DOMContentLoaded", function() {
-  const form = document.querySelector(".support-form");
-  
+  const panel = document.getElementById("supportPanel");
+  const toggle = document.getElementById("supportToggle");
+  const closeBtn = document.getElementById("closeBtn");
+  const form = document.getElementById("localSupportForm");
+
+  // باز و بستن پنل
+  toggle.addEventListener("click", () => panel.style.display = "block");
+  closeBtn.addEventListener("click", () => panel.style.display = "none");
+
+  // هنگام submit فرم فقط Tawk.to باز شود
   form.addEventListener("submit", function(e) {
-    e.preventDefault(); // جلوگیری از reload صفحه
-
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-      method: "POST",
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    })
-    .then(response => {
-      if (response.ok) {
-        form.reset(); // پاک کردن فرم بعد از ارسال
-        
-        // باز کردن Tawk.to
-        if (typeof Tawk_API !== 'undefined') {
-          Tawk_API.maximize();
-        }
-
-        alert("پیام شما ارسال شد و چت آنلاین باز شد!");
-      } else {
-        alert("خطا در ارسال فرم!");
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      alert("خطا در ارسال فرم!");
-    });
+    e.preventDefault(); // جلوگیری از ارسال واقعی فرم یا رفتن به صفحه دیگر
+    form.reset();       // پاک کردن فرم
+    if (typeof Tawk_API !== 'undefined') {
+      Tawk_API.maximize(); // باز کردن چت
+    }
   });
 });
 </script>
