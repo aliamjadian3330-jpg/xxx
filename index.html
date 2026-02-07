@@ -216,10 +216,10 @@
     text-shadow: 2px 2px 8px rgba(0,0,0,0.15), 0 0 5px rgba(14, 228, 7, 0.5);
   }
   50% {
-    text-shadow: 2px 2px 12px rgba(0,0,0,0.2), 0 0 20px rgba(189, 162, 9, 0.6);
+    text-shadow: 2px 2px 12px rgba(0,0,0,0.2), 0 0 20px rgba(251,146,60,0.6);
   }
   100% {
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.15), 0 0 5px rgba(92, 238, 34, 0.5);
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.15), 0 0 5px rgba(34,211,238,0.5);
   }
 }
 
@@ -396,10 +396,25 @@ form.addEventListener("submit", e => {
 
 
  <!-- پشتیبانی -->
-<!-- آیکون پشتیبانی -->
-<div class="support-widget" id="supportWidget">
+  <div class="support-widget" id="supportWidget">
   <div class="support-toggle" id="supportToggle">
-    <img src="icons8-online-support-94.png" alt="پشتیبانی" style="width:2.5rem; cursor:pointer;">
+    <img src="./icons8-online-support-94.png" alt="پشتیبانی" style="width:2.5rem;">
+  </div>
+
+  <div class="support-panel" id="supportPanel">
+    <div class="support-header">
+      <span>پشتیبانی آنلاین</span>
+      <i class="fas fa-times close-btn" id="closeBtn"></i>
+    </div>
+    <div class="support-body">
+      <p>سوالی داری؟ همین حالا پیام بده!</p>
+      <form class="support-form" action="https://formspree.io/f/yourFormID" method="POST">
+        <input type="text" name="name" placeholder="نام شما" required>
+        <input type="email" name="email" placeholder="ایمیل شما" required>
+        <textarea name="message" rows="4" placeholder="پیام شما..." required></textarea>
+        <button type="submit">ارسال پیام</button>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -407,31 +422,48 @@ form.addEventListener("submit", e => {
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 
 <script>
+// باز شدن فرم و تعامل با Tawk.to بعد از submit
 document.addEventListener("DOMContentLoaded", function() {
-  const supportToggle = document.getElementById("supportToggle");
+  const form = document.querySelector(".support-form");
+  
+  form.addEventListener("submit", function(e) {
+    e.preventDefault(); // جلوگیری از reload صفحه
 
-  supportToggle.addEventListener("click", () => {
-    if(window.Tawk_API && Tawk_API.maximize){
-      Tawk_API.maximize(); // باز کردن پنل
-    } else {
-      // اگر هنوز آماده نیست، هر 200ms چک کن
-      const interval = setInterval(() => {
-        if(window.Tawk_API && Tawk_API.maximize){
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        form.reset(); // پاک کردن فرم بعد از ارسال
+        
+        // باز کردن Tawk.to
+        if (typeof Tawk_API !== 'undefined') {
           Tawk_API.maximize();
-          clearInterval(interval);
         }
-      }, 200);
-    }
+
+        alert("پیام شما ارسال شد و چت آنلاین باز شد!");
+      } else {
+        alert("خطا در ارسال فرم!");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("خطا در ارسال فرم!");
+    });
   });
 });
 </script>
