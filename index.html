@@ -396,63 +396,7 @@ form.addEventListener("submit", e => {
 
 
  <!-- پشتیبانی -->
-  <div class="support-widget" id="supportWidget">
-  <div class="support-toggle" id="supportToggle">
-    <img src="./icons8-online-support-94.png" alt="پشتیبانی" style="width:2.5rem;">
-  </div>
-
-  <div class="support-panel" id="supportPanel" style="display:none;">
-    <div class="support-header">
-      <span>پشتیبانی آنلاین</span>
-      <i class="fas fa-times close-btn" id="closeBtn"></i>
-    </div>
-    <div class="support-body">
-      <p>سوالی داری؟ همین حالا پیام بده!</p>
-      <form id="localSupportForm">
-        <input type="text" name="name" placeholder="نام شما" required>
-        <input type="email" name="email" placeholder="ایمیل شما" required>
-        <textarea name="message" rows="4" placeholder="پیام شما..." required></textarea>
-        <button type="submit">ارسال پیام</button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Tawk.to Script -->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const panel = document.getElementById("supportPanel");
-  const toggle = document.getElementById("supportToggle");
-  const closeBtn = document.getElementById("closeBtn");
-  const form = document.getElementById("localSupportForm");
-
-  // باز و بستن پنل
-  toggle.addEventListener("click", () => panel.style.display = "block");
-  closeBtn.addEventListener("click", () => panel.style.display = "none");
-
-  // هنگام submit فرم فقط Tawk.to باز شود
-  form.addEventListener("submit", function(e) {
-    e.preventDefault(); // جلوگیری از ارسال واقعی فرم یا رفتن به صفحه دیگر
-    form.reset();       // پاک کردن فرم
-    if (typeof Tawk_API !== 'undefined') {
-      Tawk_API.maximize(); // باز کردن چت
-    }
-  });
-});
-</script>
-
+  <script>window.addEventListener("load",(function(){var t="698714bed0a9750221612e20";window.chatina={bId:t};var e=document.createElement("div");e.id="chatina-root",document.body.appendChild(e);var n=document.createElement("link");n.rel="stylesheet",n.href="https://cdn.chatina.ai/static/widget.css",n.crossOrigin="anonymous",document.head.appendChild(n);var a=document.createElement("script");a.src="https://cdn.chatina.ai/static/widget.js",a.crossOrigin="anonymous",document.head.appendChild(a)}));</script>
 
 <!-- ================== Footer Modern & Professional ================== -->
 <footer id="site-footer" class="footer">
