@@ -403,26 +403,34 @@ form.addEventListener("submit", e => {
   </div>
 </div>
 
+<!-- Tawk.to Script -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const supportToggle = document.getElementById("supportToggle");
 
-  // لود Tawk.to در background
-  if (!window.TawkLoaded) {
-    window.TawkLoaded = true;
-
-    var s1 = document.createElement("script");
-    s1.async = true;
-    s1.src = 'https://embed.tawk.to/6986ee11fcf37c1c397990ff/1jgrh3tsg';
-    s1.charset = 'UTF-8';
-    s1.setAttribute('crossorigin','*');
-    document.body.appendChild(s1);
-  }
-
-  // وقتی کاربر روی آیکون کلیک کرد
   supportToggle.addEventListener("click", () => {
-    if (window.Tawk_API && Tawk_API.maximize) {
-      Tawk_API.maximize(); // باز کردن ویجت
+    if(window.Tawk_API && Tawk_API.maximize){
+      Tawk_API.maximize(); // باز کردن پنل
+    } else {
+      // اگر هنوز آماده نیست، هر 200ms چک کن
+      const interval = setInterval(() => {
+        if(window.Tawk_API && Tawk_API.maximize){
+          Tawk_API.maximize();
+          clearInterval(interval);
+        }
+      }, 200);
     }
   });
 });
