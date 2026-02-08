@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ناجی راه|خدمات یدکش،مکانیک وبرق خودرو</title>
+    <link rel="manifest" href="manifest.json">
+
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/iransans@6.2.0/dist/font-face.css" rel="stylesheet" type="text/css" />
     
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#0d6efd">
 
     <link rel="stylesheet" href="stylee.css">
     <link rel="shortcut icon" href="logo7.png">
@@ -652,6 +652,11 @@ function closeWelcome() {
 <script src="js.js" defer></script>
 
 
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js');
+  }
+</script>
 
 
 
@@ -723,5 +728,6 @@ checkScroll();
 
 </body>
 </html>
+
 
 
