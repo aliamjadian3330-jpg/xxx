@@ -4,77 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ناجی راه|خدمات یدکش،مکانیک وبرق خودرو</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/rest/manifest.json">
+<meta name="theme-color" content="#22c55e">
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/iransans@6.2.0/dist/font-face.css" rel="stylesheet" type="text/css" />
-    
-
     <link rel="stylesheet" href="stylee.css">
     <link rel="shortcut icon" href="logo7.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <a href="tel:0902000000" class="emergency-call" title="تماس فوری">
+<style>
+@font-face {
+  font-family: 'IRANSans';
+  src: url('./IRANSans-Regular.woff2') format('woff2'),
+       url('./IRANSans-Regular.woff') format('woff'),
+       url('./IRANSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* اعمال فونت ایرانسل برای کل سایت و مودال */
+body, .emergency-call, .pulse pulse1, .pulse pulse2, .call-alert, .call-alert-box, .call-alert-actions, .btn-call, .btn-online, .header_top
+header_inner, .header_text, .header_subtitle road-text, .nav_link active, .nav_link, .nav_link btn_nav, .menu_toggle, .full_drawer
+drawer_close, .drawer_nav, .drawer_link active, .drawer_link, .drawer_link btn_drawer, .tab-btn, .top-panel-tabs, .tab-content
+footer-links{
+  font-family: 'IRANSans', sans-serif;
+}
+</style>
+
+</head>
+<!-- تماس -->
+<a href="tel:0902000000"
+   class="emergency-call"
+   title="تماس فوری"
+   onclick="openCallAlert(event)">
   <span class="pulse pulse1"></span>
   <span class="pulse pulse2"></span>
   <img src="./phone-call.png" alt="تماس">
 </a>
 
-</head>
+<div class="call-alert" id="callAlert">
+  <div class="call-alert-box">
+    <img style="width:3rem;" src="./logo7.png"/>
+    <p style="font-family: 'IRANSans', sans-serif;">
+      در صورت نیاز، می‌توانید به جای تماس تلفنی از درخواست آنلاین استفاده کنیدآیا قصد تماس تلفنی دارید؟
+    </p>
+    <div class="call-alert-actions">
+      <button class="btn-call" onclick="makeCall()">تماس تلفنی</button>
+      <button class="btn-online" onclick="closeCallAlert()">درخواست آنلاین</button>
+    </div>
+  </div>
+</div>
+
 <!-- FontAwesome CDN برای آیکون‌ها -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
 <body>
-    <!-- Header -->
-     <header class="header_top">
+  <header class="header_top">
   <div class="header_inner">
+    <!-- لوگو -->
     <div class="logo">
-      <img src="logo7.png" alt="ناجي راه" width="90.6px">
+      <img src="logo7.png" alt="ناجی راه" width="90">
     </div>
-<!-- <h1 class="header_title">ناجی X</h1> -->
-<h2 class="header_subtitle">جعبه ابزار آنلاین برای سفر امن و راحت</h2>
-<p>«نگران نباش، امداد نزدیک‌تر از همیشه است.»</p>
-<style>
-  .header_title {
-  font-family: 'Impact', sans-serif;
-  font-size: 4.5rem;
-  color: #07b31e;
-  text-shadow: 2px 4px 12px rgba(0,0,0,0.7);
-  margin-bottom: 0.5rem;
-  overflow: hidden;       /* برای تایپ */
-  white-space: nowrap;    /* متن روی یک خط */
-  border-right: 0.15em solid #07b31e; /* خط تایپ */
-  width: 0;               /* شروع انیمیشن تایپ */
-  animation: typing 3s steps(8) forwards, blink 0.7s step-end infinite alternate;
-}
 
-.header_subtitle {
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #ecfdf5;
-  text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
-  margin-bottom: 1rem;
-}
+    <!-- متن و شعار -->
+    <div class="header_text">
+      <h2 class="header_subtitle road-text">جعبه ابزار آنلاین برای سفر امن و راحت</h2>
+      <p>«نگران نباش، امداد نزدیک‌تر از همیشه است.»</p>
+    </div>
 
-/* ================== انیمیشن تایپ ================== */
-@keyframes typing {
-  from { width: 0; }
-  to { width: 8ch; } /* تعداد کاراکترهای "ناجی X" */
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-
-</style>
-    <!-- Desktop Nav -->
+    <!-- ناوبری دسکتاپ -->
     <nav class="nav_menu">
       <a href="#home" class="nav_link active">خانه</a>
-      <a href="#services" class="nav_link">خدمات</a>
+      <a href="toto.HTML" class="nav_link">خدمات</a>
       <a href="#portfolio" class="nav_link">نمونه‌کارها</a>
       <a href="#about" class="nav_link">درباره ما</a>
       <a href="#contact" class="nav_link btn_nav">تماس</a>
     </nav>
 
-    <!-- Hamburger Mobile -->
+    <!-- Hamburger موبایل -->
     <div class="menu_toggle" id="menuToggle">
       <span></span>
       <span></span>
@@ -83,12 +90,12 @@
   </div>
 </header>
 
-<!-- Fullscreen Drawer -->
+<!-- Fullscreen Drawer موبایل -->
 <div class="full_drawer" id="fullDrawer">
   <button class="drawer_close" id="drawerClose">×</button>
   <nav class="drawer_nav">
-    <a href="#home" class="drawer_link active">خانه</a>
-    <a href="#services" class="drawer_link">خدمات</a>
+    <a href="#" class="drawer_link active">خانه</a>
+    <a href="#services" class="drawer_link"> خدمات ها</a>
     <a href="#portfolio" class="drawer_link">نمونه‌کارها</a>
     <a href="#about" class="drawer_link">درباره ما</a>
     <a href="#contact" class="drawer_link btn_drawer">تماس</a>
@@ -97,97 +104,203 @@
 
 <!-- Overlay -->
 <div class="drawer_overlay" id="drawerOverlay"></div>
+<!-- اسکرول نرم -->
+<style>
+  .top-panel-tabs {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.top-panel-tabs::-webkit-scrollbar { display: none; }
+</style>
 
 <style>
-  /* متن جاده‌ای واقعی */
-.road-text {
-  font-family: 'Vazir', sans-serif; /* فونت فارسی */
-  font-weight: bold;
-  background: linear-gradient(
-    to right, 
-    #4b4b4b 0%, 
-    #333 25%, 
-    #fff 25%, 
-    #fff 30%, 
-    #333 30%, 
-    #4b4b4b 100%
-  );
-  background-size: 50px 100%;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  letter-spacing: 4px;
-  animation: moveRoad 2s linear infinite;
-  display: inline-block; /* قابل استفاده در span, h1, p و div */
+.tech-alert {
+    position: fixed;
+    margin-bottom: 88px;
+    bottom: 30px;
+    right: 30px;
+    width: 340px;
+    max-width: 90%;
+    background: #ffffff;
+    border-radius: 12px;
+    border-left: 10px solid #4caf50; /* حاشیه سبز سمت چپ */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.18), 0 5px 10px rgba(0,0,0,0.08);
+    padding: 22px 25px;
+    font-family: 'IRANSans', sans-serif;
+    direction: rtl;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@keyframes moveRoad {
-  0% { background-position: 0 0; }
-  100% { background-position: 50px 0; }
+.tech-alert.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tech-alert h4 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2e2e2e;
+}
+
+.tech-alert p {
+    margin: 0 0 18px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.tech-alert button {
+    background: #4caf50;
+    border: none;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.tech-alert button:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+    .tech-alert {
+        width: 90%;
+        bottom: 20px;
+        right: 5%;
+        padding: 18px 20px;
+    }
+    .tech-alert h4 { font-size: 16px; }
+    .tech-alert p { font-size: 13px; }
+    .tech-alert button { font-size: 13px; padding: 6px 14px; }
 }
 </style>
 
-    </div>
-<!-- پنل بالای سایت -->
+<script>
+const tips = [
+    // نکات عمومی فنی
+  "قبل از هر تعمیر، حتماً برق را قطع کن.",
+  "ابزار مناسب، نصف کار تعمیر است.",
+  "استفاده از دستورالعمل سازنده همیشه اولویت دارد.",
+  "شل بودن تسمه باعث خرابی زودهنگام می‌شود.",
+  "تمیز کردن منظم قطعات عمر آنها را افزایش می‌دهد.",
+  
+  // نکات یدک و قطعات
+  "قطعات یدکی اصلی همیشه بهتر از نمونه ارزان هستند.",
+  "قبل از نصب یدک، مطمئن شو که سازگار با دستگاه است.",
+  "گریس و روانکار مناسب، عمر یاتاقان‌ها را افزایش می‌دهد.",
+  "شماره سریال قطعه را همیشه بررسی کن.",
+  "نگهداری یدک‌ها در جای خشک و تمیز، عمرشان را افزایش می‌دهد.",
+  
+  // هشدارها و نکات پیشگیری
+  "صدای غیرعادی معمولاً نشانه مشکل است.",
+  "داغ شدن بیش از حد موتور می‌تواند ناشی از لقی یا روغن نامناسب باشد.",
+  "خرابی کوچک اگر نادیده گرفته شود، بزرگ می‌شود.",
+  "اتصال بد کابل یا سیم خطر پنهان ایجاد می‌کند.",
+  "اول ایمنی، بعد تعمیر."
+];
+
+
+
+const tip = tips[Math.floor(Math.random() * tips.length)];
+
+const alertBox = document.createElement("div");
+alertBox.className = "tech-alert";
+alertBox.innerHTML = `
+  <h4>آیا میدانید:</h4>
+  <p>${tip}</p>
+  <button>متوجه شدم</button>
+`;
+
+document.body.appendChild(alertBox);
+
+// نمایش با انیمیشن از پایین
+setTimeout(() => {
+  alertBox.classList.add("show");
+}, 100);
+
+alertBox.querySelector("button").onclick = () => {
+  alertBox.remove(); // فقط با کلیک بسته شود
+};
+</script>
+
+
+
+<!-- ================== TAB BUTTONS ================== -->
 <div class="top-panel-tabs">
+  <button class="tab-btn" data-tab="electric">برق‌کار</button>
   <button class="tab-btn" data-tab="tow">یدک‌کش</button>
   <button class="tab-btn" data-tab="mechanic">مکانیک</button>
-  <button class="tab-btn" data-tab="electric">برق‌کار</button>
-  <button class="tab-btn" data-tab="about">راننده</button>
+  <button class="tab-btn" data-tab="about">درباره ما</button>
 </div>
 
-<!-- محتواهای تب‌ها -->
+<!-- ================== TAB CONTENTS ================== -->
 <div class="info-tab">
 
+  <!-- تب برق‌کار -->
+  <div class="tab-content" id="electric">
+    <h3>ثبت‌نام برق‌کار</h3>
+    <p style="color: green;font-family: 'IRANSans', sans-serif;">
+      این بخش مخصوص افرادی است که در زمینه برق فعالیت می‌کنند. 
+      شما می‌توانید با ثبت‌نام، دسترسی به درخواست‌های آنلاین برق‌کاری داشته باشید 
+      و خدمات خود را به کاربران ارائه دهید.
+      <span style="color:red;font-family: 'IRANSans', sans-serif;">(بزودی فعال میشود)</span>
+    </p>
+    <p style="color: green;font-family: 'IRANSans', sans-serif;">
+      اگر آماده هستید، روی دکمه زیر کلیک کنید تا فرم ثبت‌نام را پر کنید:
+      <br>
+      <a class="sign-tab" href="electric-signup.html" target="_blank">ثبت نام</a>
+    </p>
+  </div>
 
-<div class="tab-content" id="tow">
-  <h3>ثبت‌نام یدک‌کش</h3>
-  <p>فرم یا اطلاعات مربوط به یدک‌کش
-    
-    <a class="sign-tab" href="tow-signup.html"target="_blank">
-      
-      ثبت نام
-    
-    </a>
-</p>
+  <!-- تب یدک‌کش -->
+  <div class="tab-content" id="tow">
+    <h3>ثبت‌نام یدک‌کش</h3>
+    <p style="color: green;font-family: 'IRANSans', sans-serif;">
+      این قسمت برای افرادی است که خدمات حمل خودرو یا یدک‌کشی ارائه می‌کنند. 
+      با ثبت‌نام در این بخش، می‌توانید درخواست‌های آنلاین یدک‌کشی را دریافت کنید 
+      و سریع‌تر به کاربران خدمت‌رسانی کنید.
+    </p>
+    <p style="color: green;font-family: 'IRANSans', sans-serif;">
+      برای شروع و دریافت درخواست‌ها، فرم ثبت‌نام را پر کنید:
+      <br>
+      <a class="sign-tab" href="tow-signup.html" target="_blank">ثبت نام</a>
+    </p>
+  </div>
+
+  <!-- تب مکانیک -->
+  <div class="tab-content" id="mechanic">
+    <h3>ثبت‌نام مکانیک</h3>
+    <p style="color: green;font-family: 'IRANSans', sans-serif;">
+      این بخش مخصوص مکانیک‌هایی است که می‌خواهند خدمات تعمیر و نگهداری خودرو ارائه دهند. 
+      شما می‌توانید با ثبت‌نام، درخواست‌های تعمیر آنلاین را دریافت کنید 
+      و به صورت حرفه‌ای خدمات خود را ارائه دهید.
+      <span style="color:red;font-family: 'IRANSans', sans-serif;">(بزودی فعال میشود)</span>
+    </p>
+    <p style="color: green;font-family: 'IRANSans', sans-serif;">
+      برای آماده شدن جهت دریافت درخواست‌ها، فرم ثبت‌نام را پر کنید:
+      <br>
+      <a class="sign-tab" href="mechanic-signup.html" target="_blank">ثبت نام</a>
+    </p>
+  </div>
+
+  <!-- تب درباره ما -->
+  <div class="tab-content" id="about">
+    <div class="naji-intro">
+      <strong style="font-family: 'IRANSans', sans-serif;">ناجی راه</strong><br>
+      «ناجی راه» یک جعبه ابزار آنلاین برای سفرهای امن و راحت است. هدف ما این است که در هر سفر، احساس امنیت و آرامش داشته باشید و در مواقع نیاز، سریع‌ترین دسترسی به خدمات امدادی و اطلاعات ضروری را داشته باشید. با «ناجی راه» همیشه نگران نباشید، امداد نزدیک‌تر از همیشه است.
+    </div>
+  </div>
+
 </div>
 
-<div class="tab-content" id="mechanic">
-  <h3>ثبت‌نام مکانیک</h3>
-  <p>فرم یا اطلاعات مربوط به مکانیک <span style="color:red ;">(بزودی فعال میشود)</span></p>
-  
-    <a class="sign-tab" href="tow-signup.html"target="_blank">
-      
-      ثبت نام
-    
-    </a>
-</div>
-
-<div class="tab-content" id="electric">
-  <h3>ثبت‌نام برق‌کار</h3>
-  <p>فرم یا اطلاعات مربوط به برق‌کار <span style="color:red ;">(بزودی فعال میشود)</span>
-  
-    <a class="sign-tab" href="tow-signup.html"target="_blank">
-      
-      ثبت نام
-    
-    </a>
-  </p>
-</div>
-
-<div class="tab-content" id="about">
-  <h3>برای دریافت امداد مورد نظر کلیک کنید</h3>
-  <p>
-  
-    <a class="sign-tab" href="tow-signup.html"target="_blank">
-      
-      درخواست کمک
-    
-    </a>
-  </p>
-   </div>
-</div>
 
     <header class="header">
         <div class="header_box">
@@ -197,48 +310,13 @@
                <h1 style="font-weight:bolder; font-size:35px;">
                 <span style="color:#00FF00 ;"></span>
             </h1>
-           <h2 class="special-title">(ناجي Xناجی راهته)</h2>
-<style>
- .special-title {
-  font-family: 'IRANSans', Tahoma, sans-serif;
-  font-size: 2.5rem;
-  font-weight: 800;
-  text-align: center;
-  background: linear-gradient(90deg, #22d3ee, #a78bfa, #fb923c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 1px;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
-  animation: titleGlow 2.5s ease-in-out infinite alternate;
-}
-
-@keyframes titleGlow {
-  0% {
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.15), 0 0 5px rgba(14, 228, 7, 0.5);
-  }
-  50% {
-    text-shadow: 2px 2px 12px rgba(0,0,0,0.2), 0 0 20px rgba(251,146,60,0.6);
-  }
-  100% {
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.15), 0 0 5px rgba(34,211,238,0.5);
-  }
-}
-
-
-</style>
         </div>
     </header>
-
-    <!-- خدمات -->
+    <!-- تایپی خدمات -->
     <div class="text_info">
   <span id="typewriter"></span>
 </div>
-
-
 </section>
-
 <!-- ............................................................................. -->
 <!-- شروع معرفي پلتفرم ناجي راه -->
 <article>
@@ -247,11 +325,11 @@
         <img src="./imging3 - Copy.png" alt="خرابي خودرو">
       </div>
       <div class="article_text">
-        <h1 class="article_text_one">ناجي راه</h1>
-        <h2 class="article_text_two">
+        <h1 style="font-family: 'IRANSans', sans-serif;" class="article_text_one">ناجي راه</h1>
+        <h2 style="font-family: 'IRANSans', sans-serif;" class="article_text_two">
           تجربه‌ي سفري راحت‌تر و سريع‌تر و<br>ايمن‌تر با اپليکيشن <span style="color:rgba(137, 0, 0, 0.827);">ناجي راه</span>
         </h2>
-        <p class="article_text_tree">
+        <p style="font-family: 'IRANSans', sans-serif;" class="article_text_tree">
           اين سرويس با هدف کاهش زمان انتظار، افزايش شفافيت در قيمت و دسترسي آسان به خدمات يدک‌کش، برق خودرو و مکانيکي راه‌اندازي شده است.
           هدف ما از راه‌اندازي اين پلتفرم، نبود يک راهکار ساده، سريع و قابل اعتماد براي دريافت خدمات امدادي خودرو، مخصوصاً در جاده‌ها و شرايط بحراني بود.
           در بسياري از مواقع، رانندگان يا اطلاعي از خدمات اطراف ندارند، يا بايد از طريق تماس‌هاي متعدد و با عدم قطعيت بالا مشکل را حل کنند. «ناجي راه» اين فرآيند را ديجيتالي، سريع و کاربرمحور طراحي کرده است.
@@ -268,7 +346,7 @@
             <img src="imging4.png" alt="مشکلات برق خودرو">
           </div>
           <div class="article_text2">
-            <p>
+            <p style="font-family: 'IRANSans', sans-serif;">
               ? پشتيباني کامل از مشکلات برق در بيابان:  
               باتري تمام شد؟ برق‌کار سيار ما با دستگاه‌هاي پرتابل و استارتر فوري اعزام مي‌شود.  
               دينام مشکل دارد؟ تشخيص سريع در محل و اعلام وضعيت واقعي (تعمير يا حمل فوري).  
@@ -290,6 +368,48 @@
       </div>
     </div>
   </article>
+
+  <article>
+    <div class="article_piccher">
+      <div class="article_image">
+        <img src="./download15.jpg" alt="خرابي خودرو">
+      </div>
+      <div class="article_text">
+        <h1 style="font-family: 'IRANSans', sans-serif;" class="article_text_one">شامل کجا؟</h1>
+        
+        <p style="font-family: 'IRANSans', sans-serif;">
+  پشتیبانی تخصصی از مشکلات خودرویی در مسیر و جاده:<br>
+  «ناجی راه» برای مواقعی که خودرو شما دچار مشکل می‌شود، همراه مطمئن شماست.
+  خدمات ما در حال حاضر <strong>ویژه شهر بندر امام خمینی</strong> فعال می‌باشد و به‌صورت
+  <strong>آنلاین و تلفنی</strong> ارائه می‌شود.
+  <br><br>
+
+  <strong>نحوه ثبت درخواست:</strong><br>
+  شما می‌توانید درخواست خود را به دو روش آنلاین و تلفنی ثبت کنید.
+  در <strong>درخواست آنلاین</strong>، موقعیت مکانی شما به‌صورت دقیق ثبت و ذخیره می‌شود
+  تا نزدیک‌ترین و مناسب‌ترین یدک‌کش یا متخصص، دقیقاً به مقصد شما اعزام شود.
+  حتی این امکان وجود دارد که <strong>یدک‌کش موردنظر خود</strong> را انتخاب کنید
+  تا خدمات سریع‌تر و مطمئن‌تری دریافت نمایید.
+  <br><br>
+
+  <strong>خدمات فعال فعلی ناجی راه شامل سه بخش است:</strong><br>
+  • یدک‌کش خودرو<br>
+  • تکنسین مکاترونیک (برق و مکانیک خودرو)<br>
+  • صافکاری در محل
+  <br><br>
+
+  <strong>تعمیر در محل:</strong><br>
+  متخصصین ما در بسیاری از موارد، تعمیرات لازم را <strong>در همان محل</strong> انجام می‌دهند
+  تا از حمل غیرضروری خودرو جلوگیری شود و در کوتاه‌ترین زمان ممکن به مسیر خود بازگردید.
+  <br><br>
+
+  با «ناجی راه»، دیگر نگران توقف‌های ناگهانی نباشید؛
+  امداد تخصصی، سریع و هوشمند همیشه نزدیک شماست.
+</p>
+
+      </div>
+    </div>
+</article>
 <!-- پايان معرفي پلتفرم ناجي راه -->
 <!-- شروع فوتر -->
 <section class="why-us">
@@ -297,110 +417,143 @@
   <div class="why-us-cards">
     <div class="why-card">
       <img src="./3.gif"/>
-      <h3>پشتیبانی سریع</h3>
+      <h3 style="font-family: 'IRANSans', sans-serif;">پشتیبانی سریع</h3>
       <p>تیم ما در سریع‌ترین زمان ممکن آماده خدمات‌رسانی به شماست.</p>
     </div>
     <div class="why-card">
       <img src="./4.gif"/>
-      <h3>امنیت بالا</h3>
-      <p>تمام اطلاعات شما با بالاترین استانداردهای امنیتی محافظت می‌شود.</p>
+      <h3 style="font-family: 'IRANSans', sans-serif;">امنیت بالا</h3>
+      <p style="font-family: 'IRANSans', sans-serif;">تمام اطلاعات شما با بالاترین استانداردهای امنیتی محافظت می‌شود.</p>
     </div>
     <div class="why-card">
       <img src="./2.gif"/>
-      <h3>رضایت مشتری</h3>
-      <p>کیفیت خدمات ما باعث رضایت حداکثری مشتریان شده است.</p>
+      <h3 style="font-family: 'IRANSans', sans-serif;">رضایت مشتری</h3>
+      <p style="font-family: 'IRANSans', sans-serif;">کیفیت خدمات ما باعث رضایت حداکثری مشتریان شده است.</p>
     </div>
     <div class="why-card">
       <img src="./1.gif"/>
-      <h3>خدمات 24/7</h3>
-      <p>هر زمان که نیاز داشتید، ما آماده ارائه خدمات هستیم.</p>
+      <h3 style="font-family: 'IRANSans', sans-serif;">خدمات 24/7</h3>
+      <p style="font-family: 'IRANSans', sans-serif;">هر زمان که نیاز داشتید، ما آماده ارائه خدمات هستیم.</p>
     </div>
   </div>
 </section>
+<!-- ================== Feedback Section ================== -->
 <section class="feedback-section">
   <div class="feedback-container">
-    <h2>نظر خود را با ما در میان بگذارید</h2>
-    <p>ما دوست داریم تجربه شما را بهتر کنیم. لطفاً بازخورد خود را ثبت کنید.</p>
+    <h2 style="font-family: 'IRANSans', sans-serif;">نظر خود را با ما در میان بگذارید</h2>
+    <p style="font-family: 'IRANSans', sans-serif;">ما دوست داریم تجربه شما را بهتر کنیم. لطفاً بازخورد خود را ثبت کنید.</p>
 
     <form class="feedback-form" id="feedback-form">
+      <!-- نام -->
       <div class="input-group">
         <input type="text" name="name" placeholder="نام و نام خانوادگی" required>
         <i class="fas fa-user"></i>
       </div>
 
+      <!-- ایمیل -->
       <div class="input-group">
         <input type="email" name="email" placeholder="ایمیل" required>
         <i class="fas fa-envelope"></i>
       </div>
 
+      <!-- پیام -->
       <div class="input-group">
         <textarea name="message" placeholder="نظر شما" required></textarea>
         <i class="fas fa-comment"></i>
       </div>
 
+      <!-- کپچا -->
+      <div class="input-group">
+        <label for="captchaInput">کد امنیتی:</label>
+        <div id="captcha" class="captcha"></div>
+        <input type="text" id="captchaInput" placeholder="کد بالا را وارد کنید" required>
+        <i class="fas fa-shield-alt"></i>
+      </div>
+
+      <!-- دکمه ارسال -->
       <button type="submit">ارسال بازخورد</button>
     </form>
   </div>
 </section>
 
-<!-- Toast -->
-<div class="toast" id="toast">
-  <span id="toast-message"></span>
-  <div class="toast-progress" id="toast-progress"></div>
-</div>
-
+<!-- ================== Toast ================== -->
+<div id="toast-container"></div>
 <script>
-const form = document.getElementById("feedback-form");
-const toast = document.getElementById("toast");
-const toastMessage = document.getElementById("toast-message");
-const toastProgress = document.getElementById("toast-progress");
+  document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("feedback-form");
+  const captchaEl = document.getElementById("captcha");
+  const captchaInput = document.getElementById("captchaInput");
+  let captchaCode = "";
 
-// لینک Web App نسخه ۴
-const scriptURL = "https://script.google.com/macros/s/AKfycbwNGq092JGbDadGzl2CCFNqzdOqhwKy5WLMBPGQrb5PkL2_8xBMZ6Td9x69qHBrrCU2aQ/exec";
+  // تولید کپچا 5 حرفی
+  function generateCaptcha() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    captchaCode = "";
+    for (let i=0;i<5;i++) captchaCode += chars.charAt(Math.floor(Math.random()*chars.length));
+    captchaEl.textContent = captchaCode;
+  }
+  generateCaptcha();
 
-// تابع نمایش Toast
-function showToast(message, duration = 3000) {
-  toastMessage.textContent = message;
-  toast.classList.add("show");
-  toastProgress.style.transition = `transform ${duration}ms linear`;
-  toastProgress.style.transform = "scaleX(0)";
+  function validateCaptcha() {
+    return captchaInput.value.toUpperCase() === captchaCode;
+  }
 
-  setTimeout(() => {
-    toast.classList.remove("show");
-    toastProgress.style.transition = "none";
-    toastProgress.style.transform = "scaleX(1)";
-  }, duration);
-}
+  // Toast
+  function showToast(message, duration=3000){
+    const toast = document.createElement("div");
+    toast.className = "toast show";
+    toast.innerHTML = `<span>${message}</span><div class="toast-progress"></div>`;
+    document.getElementById("toast-container").appendChild(toast);
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
+    const progress = toast.querySelector(".toast-progress");
+    progress.style.transition = `transform ${duration}ms linear`;
+    progress.style.transform = "scaleX(0)";
 
-  showToast("در حال ارسال ...", 1500);
+    setTimeout(()=>{
+      toast.classList.remove("show");
+      toast.remove();
+    }, duration);
+  }
 
-  fetch(scriptURL, {
-    method: "POST",
-    body: new FormData(form),
-    mode: "cors"
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.status === "SUCCESS") {
-      showToast("پیام شما با موفقیت ثبت شد ✅", 3500);
-      form.reset();
-    } else {
-      showToast("خطا در ارسال پیام ❌: " + data.message, 4000);
+  // Submit Form
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwNGq092JGbDadGzl2CCFNqzdOqhwKy5WLMBPGQrb5PkL2_8xBMZ6Td9x69qHBrrCU2aQ/exec";
+
+  form.addEventListener("submit", e=>{
+    e.preventDefault();
+
+    if(!validateCaptcha()){
+      showToast("کد امنیتی اشتباه است ❌",3000);
+      generateCaptcha();
+      captchaInput.value="";
+      return;
     }
-  })
-  .catch(err => {
-    showToast("خطا در ارسال پیام ❌: " + err, 4000);
+
+    showToast(" در حال ارسال میباشد لطفا صبر کنید...",1500);
+
+    fetch(scriptURL,{
+      method:"POST",
+      body: new FormData(form),
+      mode:"cors"
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      if(data.status==="SUCCESS"){
+        showToast("پیام شما با موفقیت ثبت شد ✅",3500);
+        form.reset();
+        generateCaptcha();
+      } else {
+        showToast("خطا در ارسال پیام ❌: "+data.message,4000);
+      }
+    })
+    .catch(err=>{
+      showToast("خطا در ارسال پیام ❌: "+err,4000);
+    });
   });
 });
+
 </script>
-
-
- <!-- پشتیبانی -->
+<!-- چتینا پشتیبانی -->
   <script>window.addEventListener("load",(function(){var t="698714bed0a9750221612e20";window.chatina={bId:t};var e=document.createElement("div");e.id="chatina-root",document.body.appendChild(e);var n=document.createElement("link");n.rel="stylesheet",n.href="https://cdn.chatina.ai/static/widget.css",n.crossOrigin="anonymous",document.head.appendChild(n);var a=document.createElement("script");a.src="https://cdn.chatina.ai/static/widget.js",a.crossOrigin="anonymous",document.head.appendChild(a)}));</script>
-
 <!-- ================== Footer Modern & Professional ================== -->
 <footer  class="footer">
   <div class="footer-links">
@@ -420,248 +573,6 @@ form.addEventListener("submit", e => {
   </div>
   <p>&copy; 2026 ناجی راه. تمام حقوق محفوظ است.</p>
  </footer>
-<style>
-
-/* ===== پس‌زمینه مدرن ===== */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 15, 25, 0.85); /* پس‌زمینه نیمه شفاف */
-  backdrop-filter: blur(20px) saturate(150%); /* تاری و اشباع بیشتر */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  overflow: hidden;
-  animation: fadeInBg 1s ease forwards;
-  background-image: url('https://source.unsplash.com/random/1920x1080'); /* تصویر پس‌زمینه زیبا */
-  background-size: cover; /* پوشش کامل تصویر */
-  background-position: center;
-  opacity: 0.95; /* شفافیت بیشتر */
-  transition: opacity 0.3s ease-in-out; /* انتقال نرم برای تغییر شفافیت */
-}
-
-/* ===== دایره‌های روشن در پس‌زمینه ===== */
-.modal::before, .modal::after {
-  content: "";
-  position: absolute;
-  width: 500px; height: 500px; /* دایره‌های بزرگ‌تر */
-  border-radius: 50%;
-  filter: blur(200px); /* تاری بیشتر */
-  opacity: 0.4; /* کاهش شفافیت */
-  animation: floatLight 10s infinite alternate ease-in-out;
-}
-.modal::before {
-  background: rgba(0, 198, 255, 0.5);
-  top: -200px; left: -200px;
-}
-.modal::after {
-  background: rgba(34, 197, 94, 0.5);
-  bottom: -200px; right: -200px;
-}
-
-/* ===== بدنه مودال شیشه‌ای ===== */
-.modal-content {
-  background: rgba(255, 255, 255, 0.12); /* شفافیت بیشتر برای شیشه‌ای‌تر شدن */
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 40px 30px;
-  width: 90%;
-  max-width: 480px;
-  text-align: center;
-  color: #f8fafc;
-  box-shadow: 0 4px 20px rgba(0, 255, 204, 0.3),
-              0 20px 60px rgba(0, 0, 0, 0.6);
-  transform: scale(0.8) translateY(60px);
-  opacity: 0;
-  animation: modalIn 1.5s cubic-bezier(.18, .89, .32, 1.28) forwards;
-  backdrop-filter: blur(10px) saturate(100%); /* فیلتر شیشه‌ای بیشتر */
-}
-
-/* ===== کانتینر یدک‌کش ===== */
-.tow-truck-container {
-  position: relative;
-  width: 200px; /* عرض یدک‌کش */
-  height: 200px; /* ارتفاع یدک‌کش */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: rotateAround 10s linear infinite; /* انیمیشن چرخش دور صفحه */
-  z-index: 9999;
-}
-
-/* ===== یدک‌کش ===== */
-.tow-truck {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  box-shadow: 0 0 30px rgba(0, 255, 204, 0.6); /* افکت نور اطراف یدک‌کش */
-  border-radius: 15px; /* گوشه‌های گرد برای زیبایی */
-}
-
-/* ===== انیمیشن چرخش ===== */
-@keyframes rotateAround {
-  0% {
-    transform: rotate(0deg) translateX(300px) rotate(0deg); /* شروع از موقعیت اولیه */
-  }
-  100% {
-    transform: rotate(360deg) translateX(300px) rotate(-360deg); /* چرخش کامل */
-  }
-}
-
-/* ===== انیمیشن‌های بیشتر ===== */
-@keyframes fadeInBg {
-  from { opacity: 0; } to { opacity: 1; }
-}
-
-@keyframes floatLight {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(40px) translateX(40px); }
-}
-
-/* ===== متن و دکمه ===== */
-#welcomeTitle {
-  font-size: 1.9rem;
-  font-weight: 800;
-  margin-bottom: 10px;
-  color: #fff;
-}
-
-#welcomeTitle .brand {
-  background: linear-gradient(90deg, #00c6ff, #22c55e, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(0,255,204,0.3);
-}
-
-#welcomeMessage {
-  font-size: 1.1rem;
-  color: #e2e8f0;
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
-
-.closeBtn {
-  padding: 14px 36px;
-  border: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, #00c6ff, #22c55e, #facc15);
-  background-size: 300% 300%;
-  box-shadow: 0 8px 25px rgba(34,197,94,0.5);
-  transition: all 0.35s ease;
-  animation: gradientMove 5s infinite ease-in-out;
-}
-
-.closeBtn:hover {
-  transform: translateY(-4px) scale(1.08);
-  box-shadow: 0 12px 40px rgba(59,130,246,0.6);
-}
-
-@keyframes gradientMove {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* ===== متن ===== */
-#welcomeTitle {
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 15px;
-  color: #fff;
-}
-#welcomeTitle .brand {
-  background: linear-gradient(90deg, #00c6ff, #22c55e, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
-}
-#welcomeMessage {
-  font-size: 1.2rem;
-  color: #e2e8f0;
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
-
-/* ===== دکمه ===== */
-.closeBtn {
-  padding: 16px 40px;
-  border: none;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, #00c6ff, #22c55e, #facc15);
-  background-size: 300% 300%;
-  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.5);
-  transition: all 0.35s ease;
-  animation: gradientMove 5s infinite ease-in-out;
-}
-.closeBtn:hover {
-  transform: translateY(-6px) scale(1.1);
-  box-shadow: 0 15px 50px rgba(59, 130, 246, 0.6);
-}
-
-/* ===== انیمیشن‌ها ===== */
-@keyframes modalIn {
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
-@keyframes fadeInBg {
-  from { opacity: 0; } to { opacity: 1; }
-}
-@keyframes floatLight {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(50px) translateX(50px); }
-}
-@keyframes gradientMove {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 40px rgba(0, 255, 204, 0.3); }
-  50% { box-shadow: 0 0 80px rgba(0, 255, 204, 0.6); }
-}
-
-</style>
-
-<script>
-window.addEventListener('load', () => {
-  const modal = document.getElementById('welcomeModal');
-  const sound = document.getElementById('welcomeSound');
-
-  // نمایش مودال با تاخیر نرم
-  setTimeout(() => {
-    modal.style.display = 'flex';
-    sound.play().catch(()=>{});
-  }, 1000);
-});
-
-function closeWelcome() {
-  const modal = document.getElementById('welcomeModal');
-  modal.style.transition = 'opacity 0.6s ease';
-  modal.style.opacity = '0';
-  setTimeout(() => modal.style.display = 'none', 600);
-}
-</script>
-
-<script src="js.js" defer></script>
-
-
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js');
-  }
-</script>
-
-
-
-
-
 <!-- نوار پایین ثابت -->
 <div class="bottom-bar">
   <!-- سرویس اول: اسنپ -->
@@ -678,8 +589,8 @@ function closeWelcome() {
 
   <!-- سرویس سوم: سوپرمارکت -->
   <div class="service">
-    <img src="./petrol-pump.png" alt="سوخت">
-    <span style="color:black;"> سوخت رسانی</span>
+    <img src="./body-repair.png" alt="سوخت">
+    <span style="color:black;"> صافکاری</span>
   </div>
 </div>
 
@@ -687,47 +598,15 @@ function closeWelcome() {
  <div id="toast" class="toast">
   <div class="toast-progress"></div>
 </div>
+
+<script src="js.js" defer></script>
 <script>
-const bottomBar = document.querySelector('.bottom-bar');
-const footer = document.querySelector('footer');
-
-// تابع بررسی اسکرول
-function checkScroll() {
-  const footerTop = footer.getBoundingClientRect().top;
-  const windowHeight = window.innerHeight;
-
-  // نوار پایین
-  if (footerTop < windowHeight) {
-    bottomBar.style.transform = 'translate(-50%, 150%)';
-    if (window.chatinaRoot) window.chatinaRoot.style.display = 'none';
-  } else {
-    bottomBar.style.transform = 'translateX(-50%)';
-    if (window.chatinaRoot) window.chatinaRoot.style.display = 'block';
-  }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/rest/service-worker.js')
+    .then(() => console.log('Service Worker Registered'))
+    .catch(err => console.log('SW registration failed:', err));
 }
-
-// بررسی هنگام اسکرول و تغییر سایز
-window.addEventListener('scroll', checkScroll);
-window.addEventListener('resize', checkScroll);
-
-// MutationObserver برای Chatina
-const observer = new MutationObserver((mutationsList, observer) => {
-  const chatinaDiv = document.getElementById('chatina-root');
-  if (chatinaDiv) {
-    window.chatinaRoot = chatinaDiv; // ذخیره برای دسترسی راحت‌تر
-    checkScroll(); // بررسی فوری
-    observer.disconnect(); // دیگه نیازی به نظارت نیست
-  }
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
-
-// بررسی اولیه نوار پایین
-checkScroll();
 </script>
 
 </body>
 </html>
-
-
-
